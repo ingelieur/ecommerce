@@ -1,0 +1,19 @@
+{
+  "name": "database-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "Shabrina V. Inmas",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.3",
+    "express": "^4.15.3",
+    "mongoose": "^4.10.4",
+    "morgan": "^1.8.2"
+  }
+}
