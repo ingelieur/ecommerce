@@ -12,12 +12,12 @@ var app = new Vue({
     this.cart = JSON.parse(this.cart)
   },
   methods: {
-    decode: function(token) {
+    decode: function() {
       axios.post('http://localhost:3000/decode', {
-        token: token
+        token: localStorage.getItem('token')
       })
         .then ((response) => {
-          localStorage.setItem('user', JSON.stringify(user))
+          localStorage.setItem('user', JSON.stringify(response.data))
         })
     },
     signin: function(customer) {
@@ -58,7 +58,28 @@ var app = new Vue({
       localStorage.clear()
     },
     payment: function() {
-      localStorage.clear()
+      let books = []
+      let cart = this.cart
+      this.decode()
+      let user = JSON.parse(localStorage.getItem('user'))
+      let customer = user.id
+      for (let i=0; i<cart.length ; i++) {
+        books.push(cart[i]._id)
+      }
+      console.log('books=-',books)
+      let total = 0
+      for (let i=0; i<cart.length; i++) {
+        total += cart[i].price * cart[i].count
+      }
+      axios.post('http://localhost:3000/api/transactions/checkout', {
+        customer: customer,
+        books: books,
+        total: total
+      })
+        .then((response) => {
+          console.log('response ', response)
+        })
+      localStorage.removeItem(cart)
       window.location.href="/#"
     },
     showBooks: function() {

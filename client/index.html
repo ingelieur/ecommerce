@@ -32,7 +32,7 @@
         <!-- Add the modifier "is-active" to display it on mobile -->
         <div class="nav-right nav-menu">
           <a v-if="token.length > 1" @click="signout" class="nav-item black">Sign out</a>
-          <a v-else-if="token === ''" class="nav-item black modal-button" data-target="#sign-in">Sign in/Join</a> 
+          <a v-else class="nav-item black modal-button" data-target="#sign-in">Sign in/Join</a> 
           <div class="nav-item">
             <a class="button is-primary is-outlined modal-button" data-target="#modal-ter"><i class="fa fa-shopping-cart fa-lg"></i>&nbspCart</a>
           </div>
@@ -231,7 +231,7 @@
         <div class="modal-content">
           <div class="box has-text-centered">
             <p class="title"> You have to sign in/register first</p>
-            <a class="button is-primary is-outlined modal-button" data-target="#modal-ter"><i class="fa fa-user-o fa-lg"></i>&nbspSign in/Join</a>
+            <a class="button is-primary is-outlined modal-modal-button" data-target="#sign-in"><i class="fa fa-user-o fa-lg"></i>&nbspSign in/Join</a>
           </div>
           <!-- Any other Bulma elements you want -->
         </div>

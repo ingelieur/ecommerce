@@ -16,6 +16,13 @@ jQuery(document).ready(function ($) {
     $(target).addClass('is-active');
   });
 
+  $('.modal-modal-button').click(function() {
+    var target = $('#sign-in');
+    $('html').addClass('is-clipped');
+    $('#modal-ter').removeClass('is-active');
+    $('#sign-in').addClass('is-active');
+  });
+
   $('.modal-background, .modal-close').click(function() {
     $('html').removeClass('is-clipped');
     $(this).parent().removeClass('is-active');
