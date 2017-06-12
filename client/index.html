@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" sizes="16x16 32x32 64x64" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <title>Renaissains - High Quality Books, High Quality You</title>
+  </head>
+  <body>
+    <div id="app">
+      <nav class="nav has-shadow">
+        <div class="nav-left">
+          <a class="nav-item" href="index.html">
+            <img src="/images/renaissains-logo.png" alt="Renaissains logo">
+          </a>
+        </div>
+
+        <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
+        <!-- You need JavaScript to toggle the "is-active" class on "nav-menu" -->
+        <span class="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+
+        <!-- This "nav-menu" is hidden on mobile -->
+        <!-- Add the modifier "is-active" to display it on mobile -->
+        <div class="nav-right nav-menu">
+          <a v-if="token.length > 1" @click="signout" class="nav-item black">Sign out</a>
+          <a v-else class="nav-item black modal-button" data-target="#sign-in">Sign in/Join</a> 
+          <div class="nav-item">
+            <a class="button is-primary is-outlined modal-button" data-target="#modal-ter"><i class="fa fa-shopping-cart fa-lg"></i>&nbspCart</a>
+          </div>
+        </div>
+      </nav>
+      <div class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <div class="field">
+            <label class="label">Name</label>
+            <p class="control">
+            <input class="input" type="text" placeholder="Text input">
+            </p>
+          </div>
+
+          <div class="field">
+            <label class="label">Username</label>
+            <p class="control has-icons-left has-icons-right">
+            <input class="input is-success" type="text" placeholder="Text input" value="bulma">
+            <span class="icon is-small is-left">
+              <i class="fa fa-user"></i>
+            </span>
+            <span class="icon is-small is-right">
+              <i class="fa fa-check"></i>
+            </span>
+            </p>
+            <p class="help is-success">This username is available</p>
+          </div>
+
+          <div class="field">
+            <label class="label">Email</label>
+            <p class="control has-icons-left has-icons-right">
+            <input class="input is-danger" type="text" placeholder="Email input" value="hello@">
+            <span class="icon is-small is-left">
+              <i class="fa fa-envelope"></i>
+            </span>
+            <span class="icon is-small is-right">
+              <i class="fa fa-warning"></i>
+            </span>
+            </p>
+            <p class="help is-danger">This email is invalid</p>
+          </div>
+
+          <div class="field">
+            <label class="label">Subject</label>
+            <p class="control">
+            <span class="select">
+              <select>
+                <option>Select dropdown</option>
+                <option>With options</option>
+              </select>
+            </span>
+            </p>
+          </div>
+
+          <div class="field">
+            <label class="label">Message</label>
+            <p class="control">
+            <textarea class="textarea" placeholder="Textarea"></textarea>
+            </p>
+          </div>
+
+          <div class="field">
+            <p class="control">
+            <label class="checkbox">
+              <input type="checkbox">
+              I agree to the <a href="#">terms and conditions</a>
+            </label>
+            </p>
+          </div>
+
+          <div class="field">
+            <p class="control">
+            <label class="radio">
+              <input type="radio" name="question">
+              Yes
+            </label>
+            <label class="radio">
+              <input type="radio" name="question">
+              No
+            </label>
+            </p>
+          </div>
+
+          <div class="field is-grouped">
+            <p class="control">
+            <button class="button is-primary">Submit</button>
+            </p>
+            <p class="control">
+            <button class="button is-link">Cancel</button>
+            </p>
+          </div>
+        </div>
+        <button class="modal-close"></button>
+      </div>
+      <section class="hero box">    
+        <div class="search-section level">
+          <div class="level-item has-text-centered">
+            <a class="title" href='#categories'>Our Collections</a>
+          </div>
+          <div class="level-item has-text-centered">
+            <div class="field has-addons">
+              <p class="control">
+              <input id="schTitle" class="input" type="text" placeholder="Book Title">
+              </p>
+              <p class="control">
+              <a @click.prevent="searchTitle" class="button is-primary">Search</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="container">
+        <div class="tile is-ancestor">
+          <div class="tile is-8 is-parent">
+            <div class="tile is-child">
+              <figure class="image" style="margin-top:10px">
+                <img src="/images/banner-long.jpg" alt="">
+              </figure>
+            </div>
+          </div>
+          <div class="tile is-parent is-vertical">
+            <div class="tile is-child">
+              <figure class="image">
+                <img src="/images/banner-1.jpg" alt="">
+              </figure>
+            </div>
+            <div class="tile is-child">
+              <figure class="image">
+                <img src="/images/banner-2.jpg" alt="">
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br/><br/>
+      <div id="categories" class="tabs is-centered is-boxed is-medium">
+        <ul>
+          <li>
+            <a @click.prevent="showBooks" href="">All</a>
+          </li>
+          <li>
+            <a @click.prevent="searchCat" href="">Fiction</a>
+          </li>
+          <li>
+            <a @click.prevent="searchCat" href="">Non-fiction</a>
+          </li>
+          <li>
+            <a @click.prevent="searchCat" href="">Gifts</a>
+          </li>
+        </ul>
+      </div>
+      <div class="container">
+        <div class="columns is-multiline is-tablet">
+          <div class="column is-2" v-for="book in books">
+            <div class="card bm--card-equal-height">
+              <div class="card-image">
+                <figure class="image">
+                  <img :src="book.image" alt="Image">
+                </figure>
+              </div>
+              <div class="card-content">
+                <div class="content has-text-centered">
+                  <p class="subtitle">{{book.title}}</p>
+                  <p class="subtitle">{{book.author}}</p>
+                  <br>
+                  <p class="title">{{book.price}}</p>
+                </div>
+              </div>
+              <footer class="card-footer">
+                <!--<a class="card-footer-item"><i class="fa fa-book fa-lg"></i>&nbspDetails</a>-->
+                <a class="card-footer-item"><i class="fa fa-book fa-lg"></i>&nbsp{{book.stock}}</a>
+                <a v-if="book.stock > 0" v-on:click.prevent="addToCart(book)" class="card-footer-item modal-button" data-target="#modal-ter"><i class="fa fa-shopping-cart fa-lg"></i>&nbspCart</a>
+                <a v-else class="card-footer-item">Empty</a>
+              </footer>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br/><br/>
+      <div v-if="token.length > 0" id="modal-ter"class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Cart</p>
+            <button class="delete"></button>
+          </header>
+          <section class="modal-card-body">
+            <table class="table is-striped">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total Price</th>
+                </tr>
+              </thead>
+              <tbody v-for="book in cart">
+                <th>{{book.title}}</th>
+                <th>{{book.price}}</th>
+                <th>{{book.count}}</th>
+                <th>{{book.price * book.count}}</th>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th></th>
+                  <th colspan="2">Total Price</th>
+                  <th>{{calculateTotal}}</th>
+                </tr>
+              </tfoot>
+            </table>
+          </section>
+          <footer class="modal-card-foot">
+            <a class="button" href="/#">Continue Shopping</a>
+            <a class="button is-danger" href="/checkout.html">Proceed to Checkout</a>
+          </footer>
+        </div>
+      </div>
+      <div v-else id="modal-ter" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <div class="box has-text-centered">
+            <p class="title"> You have to sign in/register first</p>
+            <a class="button is-primary is-outlined modal-button" data-target="#modal-ter"><i class="fa fa-user-o fa-lg"></i>&nbspSign in/Join</a>
+          </div>
+          <!-- Any other Bulma elements you want -->
+        </div>
+        <button class="modal-close"></button>
+      </div>
+
+      <footer class="footer">
+        <div class="container">
+          <div class="content has-text-centered">
+            <p><strong>Renaissains</strong> by <a href="http://esviai.com">Shabrina V. Inmas</a></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script type="text/javascript" src="./vue.js"></script>
+    <script type="text/javascript" src="./scripts.js"></script>
+  </body>
+</html>

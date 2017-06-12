@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" sizes="16x16 32x32 64x64" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <title>Renaissains - High Quality Books, High Quality You</title>
+  </head>
+  <body>
+    <div id="app">
+      <nav class="nav has-shadow">
+        <div class="nav-left">
+          <a class="nav-item" href="index.html">
+            <img src="/images/renaissains-logo.png" alt="Renaissains logo">
+          </a>
+        </div>
+
+        <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
+        <!-- You need JavaScript to toggle the "is-active" class on "nav-menu" -->
+        <span class="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+
+        <!-- This "nav-menu" is hidden on mobile -->
+        <!-- Add the modifier "is-active" to display it on mobile -->
+        <div class="nav-right nav-menu">
+          <a class="nav-item black">Sign in/Join</a>
+          <div class="nav-item">
+            <a class="button is-primary is-outlined modal-button" data-target="#modal-ter"><i class="fa fa-shopping-cart fa-lg"></i>&nbsp;Cart</a>
+          </div>
+        </div>
+      </nav>
+      <div v-if="token.length<1" class="container">
+        <br>
+        <br>
+        <p class="title">You have to sign in first</p>
+      </div>
+      <div v-else>
+        <section class="hero box">    
+          <div class="search-section level">
+            <div class="level-item has-text-centered">
+              <p class="title">Check Out</p>
+            </div>
+          </div>
+        </section>
+        <br/><br/>
+        <div class="container">
+          <table class="table is-striped">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="book in cart">
+                <th>{{book.title}}</th>
+                <th>{{book.price}}</th>
+                <th>{{book.count}}</th>
+                <th>{{book.price * book.count}}</th>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th colspan="2">Total Price</th>
+                <th>{{calculateTotal}}</th>
+              </tr>
+            </tfoot>
+          </table>
+          <br/><br/>
+          <div class="container has-text-centered">
+            <a class="button is-primary" href="/#">Continue Shopping</a>
+            <a @click="payment" class="button is-danger modal-button" data-target="#modal-ter">Proceed to Payment</a>
+          </div>
+        </div>
+        <div id="modal-ter" class="modal">
+          <div class="modal-background"></div>
+          <div class="modal-content">
+            <p class="image">
+            <img src="./images/thank-you.png">
+            </p>
+          </div>
+          <button class="modal-close"></button>
+        </div>
+        <br/><br/>
+        <footer class="footer">
+          <div class="container">
+            <div class="content has-text-centered">
+              <p><strong>Renaissains</strong> by <a href="http://esviai.com">Shabrina V. Inmas</a></p>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <script type="text/javascript" src="./scripts.js"></script>
+    <script type="text/javascript" src="./vue.js"></script>
+  </body>
+</html>

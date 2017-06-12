@@ -1,5 +1,5 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 var bookSchema = new Schema({
   title: {
@@ -8,11 +8,17 @@ var bookSchema = new Schema({
   },
   author: String,
   image: String,
-  category: String,
+  category: {
+    type: String,
+    enum: {values: ['Fiction', 'Non-fiction', 'Gifts'], message: '{PATH} should not be outside of the allowed values'}
+  },
   price: Number,
-  stock: Number
-});
+  stock: {
+    type: Number,
+    min: 0
+  }
+})
 
-var Book = mongoose.model('Book', bookSchema);
+var Book = mongoose.model('Book', bookSchema)
 
-module.exports = Book;
+module.exports = Book

@@ -30,10 +30,10 @@ var customerSchema = new Schema ({
   },
   role: {
     type: String,
-    enum: {values: ['admin','customer'], message: '{PATH} should not outside of the allowed values'}
+    enum: {values: ['admin','customer'], message: '{PATH} should not be outside of the allowed values'}
   }
 })
 
-var customer = mongoose.model('customer', customerSchema)
+var Customer = mongoose.model('Customer', customerSchema)
 
-module.exports = customer
+module.exports = Customer

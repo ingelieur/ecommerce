@@ -1,0 +1,24 @@
+.nav-left {
+  margin-left: 3em;
+}
+
+.nav-right {
+  margin-right: 3em;
+}
+
+.search-section {
+  margin: 2em 0em;
+}
+
+.bm--card-equal-height {
+  display:flex;
+  flex-direction: column;
+  height: 100%;
+}
+.bm--card-equal-height .card-footer {
+  margin-top: auto;
+}
+
+.card-content {
+margin-top: auto;
+}
