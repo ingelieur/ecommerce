@@ -11,6 +11,7 @@ router.post('/signup', Customer.createCust)
 //router.post('/sellSignup', Customer.createSell)
 router.post('/adminSignup', Authentization.admin, Customer.createAdmin)
 router.post('/signin', Customer.signin)
+router.post('/decode', Customer.decodeToken)
 
 
 module.exports = router

@@ -4,6 +4,7 @@ const saltRounds = 10
 const jwt = require(`jsonwebtoken`)
 
 var createCust = ((req,res) => {
+  console.log(req.body)
   if(req.body.password.length !== 0) {
     if(req.body.password.length < 8) {
       res.send({errors: {password: {message: `Password length should not be less than 8 characters`}}})
@@ -142,6 +143,13 @@ var signin = ((req, res) => {
   })
 })
 
+const decodeToken = ((req,res) => {
+  let token = req.body.token
+  let decoded = jwt.verify(token, process.env.SECRET_KEY)
+  console.log(decoded)
+  res.send(decoded)
+})
+
 module.exports = {
   createCust,
   //createSell,
@@ -150,5 +158,6 @@ module.exports = {
   showOne,
   update,
   destroy,
-  signin
+  signin,
+  decodeToken
 }

@@ -2,18 +2,56 @@ var app = new Vue({
   el: '#app',
   data: {
     books: [],
-    //cart: [],
     cart: localStorage.getItem('cart') || [],
-    //token: localStorage.getItem('token') || ''
-    token: localStorage.getItem('token') || ''
+    token: localStorage.getItem('token') || '',
+    customer: {},
+    register: true
   },
   created: function () {
     this.showBooks()
     this.cart = JSON.parse(this.cart)
   },
   methods: {
-    signin: function() {
-
+    decode: function(token) {
+      axios.post('http://localhost:3000/decode', {
+        token: token
+      })
+        .then ((response) => {
+          localStorage.setItem('user', JSON.stringify(user))
+        })
+    },
+    signin: function(customer) {
+      var self = this
+      axios.post('http://localhost:3000/signin', {
+        username: customer.username,
+        password: customer.password
+      })
+        .then ((response) => {
+          if(response.data.token) {
+            localStorage.setItem('token', response.data.token)
+            self.token = response.data.token
+          }
+        })
+    },
+    changeToSignIn: function() {
+      this.register = false
+    },
+    changeToRegister: function () {
+      this.register = true
+    },
+    register: function(customer) {
+      axios.post('http://localhost:3000/signup', {
+        name: customer.name,
+        username: customer.username,
+        password: customer.password,
+        email: customer.email
+      })
+        .then((response) => {
+          console.log(response)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
     signout: function() {
       this.token = ''
@@ -22,9 +60,6 @@ var app = new Vue({
     payment: function() {
       localStorage.clear()
       window.location.href="/#"
-    },
-    getCart: function() {
-      this.checkout = JSON.parse(localStorage.getItem('cart'))
     },
     showBooks: function() {
       let self = this
@@ -72,10 +107,8 @@ var app = new Vue({
       let cart = this.cart
       let total = 0
       for (let i=0; i<cart.length; i++) {
-        console.log(cart[i].price)
         total += cart[i].price * cart[i].count
       }
-      console.log(total)
       return total
     }
   }
